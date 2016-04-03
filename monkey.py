@@ -554,7 +554,7 @@ def mon(key: str, value: dict, fmt: str, meta: dict) -> dict:
             return # not a command
 
         if key == 'Link':
-            inlines, target = value
+            attr, inlines, target = value
             url, title = target
 
             # metadata interpolation
@@ -593,7 +593,7 @@ def mon(key: str, value: dict, fmt: str, meta: dict) -> dict:
                 match = _meta_interp_pattern.match(orig)
             title += orig
             # default return value
-            ret = Link(inlines, [url, title])
+            ret = Link(attr, inlines, [url, title])
 
             # ruby
             ruby_match = _ruby_pattern.match(url)
@@ -668,8 +668,8 @@ def mon(key: str, value: dict, fmt: str, meta: dict) -> dict:
 
         if key == 'Image':
             # inline commands
-            if not value[0]: return # empty alt text - no command
-            t, c = value[0][0]['t'], value[0][0]['c']
+            if not value[1]: return # empty alt text - no command
+            t, c = value[1][0]['t'], value[1][0]['c']
             if t == 'Str' and c[0] == ':':
                 cmd_strings = c[1:].split(',')
                 cmd = {}
@@ -690,9 +690,9 @@ def mon(key: str, value: dict, fmt: str, meta: dict) -> dict:
 
                 # FIXME: not properly implemented
                 # FIXME: html5 uses <figure></figure>
-                inline_str = _to_str(value[0][2:])
+                inline_str = _to_str(value[1][2:])
                 if 'width=' in cmd:
-                    src, fig = value[1][0], value[1][1][4:]
+                    src, fig = value[2][0], value[2][1][4:]
                     return RawInline(fmt, '<div class="figure">'
                                      '<img src="{0}" title="{1}" alt="{2}" width="{3}" />'
                                      '<p class="caption">{2}</p>'

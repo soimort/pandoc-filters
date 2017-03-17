@@ -9,8 +9,6 @@ Resources:
 
 **Monkeydown** (or "Monkey Flavored Markdown") is an extension to the standard / pandoc markdown format, implemented as a pandoc filter.
 
-For more details, see: <https://github.com/soimort/soimort/tree/pandocfilters/monkeydown>
-
 
 ## `jsinliner.py`
 

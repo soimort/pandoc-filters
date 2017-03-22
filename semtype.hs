@@ -127,6 +127,7 @@ uniqueNotation = [
   ("\\.\\.\\.\\.\\.\\.", "\\cdots"), -- ......
   ("\\.\\.\\.", "\\dots"),           -- ...
   ("~", "\\sim"),                    -- ~
+  ("[[:blank:]]\\*[[:blank:]]", "\\times "),       -- *    (multiplication)
   ("[[:blank:]]\\.[[:blank:]]", "\\,.\\,"),        -- .    (dot with margins)
   ("[[:blank:]|\n]&[[:blank:]|\n]", "\\qquad "),   -- &    (extra spacing)
   ("[[:blank:]|\n]\\|[[:blank:]|\n]", "\\,|\\,"),  -- |    (bar with margins)

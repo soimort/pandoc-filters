@@ -60,16 +60,25 @@ subSpecialSymbol s = foldl f s specialSymbol
 -- list of special symbols
 specialSymbol = [
   -- Greek alphabet
+  ("eta", "\\eta"),
   ("Gam", "\\Gamma"),
   ("lam", "\\lambda"),
+  ("Phi", "\\Phi"),
+  ("phi", "\\varphi"),
   ("Sig", "\\Sigma"),
   ("sig", "\\sigma"),
   ("tau", "\\tau"),
+  -- data constructors
+  ("inl", "\\textbf{inl}"),
+  ("inr", "\\textbf{inr}"),
+  -- types / sorts
+  ("bool", "\\textbf{bool}"),
+  ("int", "\\textbf{int}"),
   -- sets of numbers
   ("N", "\\mathbb{N}"),
-  ("Q", "\\mathbb{Q}"),
-  ("R", "\\mathbb{R}"),
   ("Z", "\\mathbb{Z}"),
+  --("Q", "\\mathbb{Q}"),
+  --("R", "\\mathbb{R}"),
   -- math
   ("in", "\\in") ]
 
@@ -85,7 +94,8 @@ keywordText = [
   "Aexp", "Bexp", "Cexp",
   "true", "false",
   "if", "then", "else", "fi",
-  "do", "while", "repeat",
+  "case", "of",
+  "do", "while", "repeat", "until",
   "skip" ]
 
 -- unique notation (that can be replaced context-freely)
@@ -117,8 +127,9 @@ uniqueNotation = [
   ("\\.\\.\\.\\.\\.\\.", "\\cdots"), -- ......
   ("\\.\\.\\.", "\\dots"),           -- ...
   ("~", "\\sim"),                    -- ~
-  ("&", "\\qquad"),                  -- &    (extra spacing)
-  ("\\|", "\\,|\\,"),                -- |    (bar with margins)
+  ("[[:blank:]]\\.[[:blank:]]", "\\,.\\,"),        -- .    (dot with margins)
+  ("[[:blank:]|\n]&[[:blank:]|\n]", "\\qquad "),   -- &    (extra spacing)
+  ("[[:blank:]|\n]\\|[[:blank:]|\n]", "\\,|\\,"),  -- |    (bar with margins)
   ("!", "\\downarrow") ]             -- !    (big-step evaluation)
 
 -- grouped braces ( "<[" "]>" )
@@ -129,9 +140,9 @@ subRBrace s =
 
 -- box
 subLBox s =
-  subRegex (mkRegex "\\[\\[") s $ "\\boxed{"
+  subRegex (mkRegex "\\|\\[") s $ "\\boxed{"
 subRBox s =
-  subRegex (mkRegex "\\]\\]") s $ "}"
+  subRegex (mkRegex "\\]\\|") s $ "}"
 
 -- underline
 subLUnderline s =
@@ -145,11 +156,23 @@ subLOverline s =
 subROverline s =
   subRegex (mkRegex "\\]-") s $ "}"
 
+-- floor
+subLFloor s =
+  subRegex (mkRegex "\\[_") s $ "\\lfloor "
+subRFloor s =
+  subRegex (mkRegex "_\\]") s $ "\\rfloor "
+
 -- angle brackets (no internal spacing, distinguished from less/greater-than)
 subLAngle s =
   subRegex (mkRegex "<([^[:blank:]])") s $ "\\langle \\1"
 subRAngle s =
   subRegex (mkRegex "([^[:blank:]])>") s $ "\\1\\rangle "
+
+-- grouped double square brackets
+subLLBracket s =
+  subRegex (mkRegex "\\[\\[") s $ "[\\!["
+subRRBracket s =
+  subRegex (mkRegex "\\]\\]") s $ "]\\!]"
 
 -- grouped square brackets
 subLBracket s =
@@ -170,7 +193,9 @@ semType m@(Math mathType s) = do
   let s' =
         subLParen $ subRParen $
         subLBracket $ subRBracket $
+        subLLBracket $ subRRBracket $
         subLAngle $ subRAngle $
+        subLFloor $ subRFloor $
         subLOverline $ subROverline $
         subLUnderline $ subRUnderline $
         subLBox $ subRBox $

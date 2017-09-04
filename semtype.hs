@@ -75,12 +75,13 @@ specialSymbol = [
   ("bool", "\\textbf{bool}"),
   ("int", "\\textbf{int}"),
   -- sets of numbers
-  ("N", "\\mathbb{N}"),
-  ("Z", "\\mathbb{Z}"),
+  --("N", "\\mathbb{N}"),
+  ("Z", "\\mathbb{Z}")
   --("Q", "\\mathbb{Q}"),
   --("R", "\\mathbb{R}"),
   -- math
-  ("in", "\\in") ]
+  --("in", "\\in")
+  ]
 
 -- keyword text (use \textbf)
 subKeywordText s = foldl f s keywordText
@@ -91,11 +92,12 @@ subKeywordText s = foldl f s keywordText
                ) s' $ "\\1\\textbf{ " ++ p0 ++ " }\\2"
 -- list of keyword texts
 keywordText = [
-  "Aexp", "Bexp", "Cexp",
+  "Aexp", "Bexp", "Com",
   "true", "false",
   "if", "then", "else", "fi",
   "case", "of",
   "do", "while", "repeat", "until",
+  "for", "to",
   "skip" ]
 
 -- unique notation (that can be replaced context-freely)

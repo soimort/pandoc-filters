@@ -21,7 +21,9 @@ htmlTombstone =
 qed :: Block -> IO Block
 qed b@(RawBlock (Format "latex") "\\Qed") =
   return $ RawBlock fmt htmlTombstone
-qed b@(Para ins) | last ins == Str "[QED]" =
+qed b@(Para ins) | last ins `elem` [ Str "[QED]",
+                                     -- "tex" rather than "latex" -- why?
+                                     RawInline (Format "tex") "\\Qed" ] =
                      return $ Para $ init ins ++ [
                      RawInline fmt htmlTombstone ]
                  | otherwise = return b

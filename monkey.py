@@ -504,6 +504,7 @@ def mon(key: str, value: dict, fmt: str, meta: dict) -> dict:
             # FIXME: formatting not handled where checkbox appears
             ret = []
             for item in value:
+                if not item: continue
                 c0 = item[0]['c']
                 if len(c0) > 2 and c0[0]['c'] == '[' and c0[1]['t'] == 'Space' and c0[2]['c'] == ']':
                     ret.append([{'t': item[0]['t'],

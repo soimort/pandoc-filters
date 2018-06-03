@@ -2,6 +2,9 @@
 {-
   panthm.hs
   A Pandoc filter that makes theorems great!
+
+  Dependencies:
+  - regex-compat
 -}
 
 import Text.Pandoc.JSON

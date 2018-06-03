@@ -3,7 +3,7 @@
 Resources:
 
 * *Pandoc filters* <http://pandoc.org/filters.html>
-* *Definition of Pandoc data structure for format-neutral representation of documents* <https://hackage.haskell.org/package/pandoc-types-1.17.4.2/docs/Text-Pandoc-Definition.html>
+* *Definition of Pandoc data structure for format-neutral representation of documents* <https://hackage.haskell.org/package/pandoc-types-1.19/docs/Text-Pandoc-Definition.html>
 
 
 ## Monkeydown
